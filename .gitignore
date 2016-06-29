@@ -1,0 +1,8 @@
+node_modules/
+.vscode
+.idea/
+*.iml
+*.log
+bower_components/
+npm-debug.log
+.settings
