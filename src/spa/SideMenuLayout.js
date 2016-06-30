@@ -1,16 +1,16 @@
 
 import React, { Component, PropTypes } from 'react';
-import { Flex, NavItem, SectionItem } from './Flex';
+import { Flex, NavItem, SectionItem } from 'reactor-ui/containers/Flex';
 
 import './SideMenuLayout.css';
 
-export const SideMenuBar = ({width = 220, children, background = '#FFF'}) => (
-    <NavItem flex={`0 0 ${width}px`} background={background} >
+export const SideMenu = ({width = 220, children, background = '#FFF'}) => (
+    <NavItem style={{borderRight: '1px solid #E5E5E5'}} flex={`0 0 ${width}px`} background={background} >
         {children}
     </NavItem>
 );
 
-export const Body = ({children, background = '#FFF'}) => (
+export const Content = ({children, background = '#FFF'}) => (
     <SectionItem background={background}>
         {children}
     </SectionItem>

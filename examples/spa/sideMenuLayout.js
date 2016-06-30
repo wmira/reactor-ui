@@ -1,28 +1,23 @@
 import React from 'react';
 import { render } from 'react-dom';
 
-import { SideMenuLayout, SideMenuBar, Body } from 'reactor-ui/spa/SideMenuLayout';
+import { SideNav, NavItem } from 'reactor-ui/sidenav';
+import { SideMenuLayout, SideMenu, Content } from 'reactor-ui/spa/SideMenuLayout';
 
 const App = React.createClass({
 
     render() {
         return (
             <SideMenuLayout>
-                <SideMenuBar background={'#E5E5E5'}>
-                    <ul>
-                        <li>Part 1</li>
-                        <li>Part 2</li>
-                        <li>Part 3</li>
-                        <li>Part 4</li>
-                        <li>Part 5</li>
-                        <li>Part 6</li>
-                    </ul>
-                </SideMenuBar>
-                <Body>
-                    Hello
-                    
-
-                </Body>
+                <SideMenu background={'#FFF'}>
+                    <SideNav>
+                        <NavItem id='dollar' text='Dollar' icon='fa fa-dollar'></NavItem>
+                        <NavItem id='cube' text='Cube' icon='fa fa-cube'></NavItem>
+                        <NavItem id='comment' text='Comment' icon='fa fa-comment-o'></NavItem>
+                    </SideNav>
+                </SideMenu>
+                <Content>
+                </Content>
             </SideMenuLayout>
         );
     }

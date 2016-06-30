@@ -4,6 +4,7 @@
         "ecmaVersion": 6,
         "sourceType": "module",
         "ecmaFeatures": {
+            "classes": true,
             "arrowFunctions": true,
             "destructuring": true,
             "modules": true,

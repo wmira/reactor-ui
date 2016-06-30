@@ -15,3 +15,8 @@ export const SectionItem = ({background, flex, children}) => (
 
 
 export const Flex = ({style,children}) => <div style={{display: 'flex', ...style}}>{children}</div>;
+export const FlexColumn = (props) => <Flex style={{flexDirection: 'column'}}>{props.children}</Flex>;
+
+FlexColumn.propTypes = {
+    children: PropTypes.node
+};

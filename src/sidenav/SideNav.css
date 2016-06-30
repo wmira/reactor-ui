@@ -1,0 +1,14 @@
+
+:local(.sidenav) {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+:local(.nav) {
+    padding: 8px 16px;
+    cursor: pointer;
+}
+:local(.nav-item) {
+
+}
