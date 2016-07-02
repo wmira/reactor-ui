@@ -2,6 +2,7 @@
 import React, { PropTypes } from 'react';
 import styles from './SideNav.css';
 
+//section nav
 export const SNav = (props) => (
     <div className={styles['nav-section']} style={props.style}>
         {props.title}
@@ -9,7 +10,7 @@ export const SNav = (props) => (
 );
 export const Nav = (props) => (
     <div className={styles['nav-item']}>
-        <span style={{width: 18}} className={props.icon}/>{props.text}
+        <span style={{width: 22}} className={props.icon}/>{props.text}
     </div>
 );
 

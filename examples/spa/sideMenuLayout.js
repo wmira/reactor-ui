@@ -22,14 +22,28 @@ const App = React.createClass({
                             <NavItem id='comment' text='Comment' icon='fa fa-comment-o'/>
                         </NavSection>
                         <NavSection title='PRODUCTS'>
-                            <NavItem id='dollar2' text='Dollar' icon='fa fa-dollar'/>
+                            <NavItem id='addproduct' text='Add Product' icon='fa fa-cubes'/>
                             <NavItem id='cube2' text='Cube' icon='fa fa-cube'/>
-                            <NavGroup id='others' text='Comment' icon='fa fa-comment-o'>
+                            <NavGroup id='smenu1' text='Comment' icon='fa fa-bars'>
                                 <NavItem id='dollar2' text='Dollar' icon='fa fa-dollar'/>
-                                <NavItem id='cube2' text='Cube' icon='fa fa-cube'/>
-                                <NavItem id='cube2' text='Cube' icon='fa fa-cube'/>
+                                <NavItem id='cube3' text='Cube Sub 1' icon='fa fa-cube'/>
+                                <NavItem id='cube4' text='Cube Sub 2' icon='fa fa-cube'/>
                             </NavGroup>
                             <NavItem id='comment2' text='Comment' icon='fa fa-comment-o'></NavItem>
+                        </NavSection>
+                        <NavSection title='CUSTOMERS'>
+                            <NavItem id='c1' text='Add Customer' icon='fa fa-cubes'/>
+                            <NavItem id='c2' text='Cube' icon='fa fa-cube'/>
+                            <NavGroup id='smenu2' text='Comment' icon='fa fa-bars'>
+                                <NavItem id='c3' text='Dollar' icon='fa fa-dollar'/>
+                                <NavItem id='c4' text='Cube Sub 1' icon='fa fa-cube'/>
+                                <NavItem id='c5' text='Cube Sub 2' icon='fa fa-cube'/>
+                            </NavGroup>
+                            <NavItem id='c6' text='Comment' icon='fa fa-comment-o'></NavItem>
+                            <NavItem id='c7' text='Add Customer' icon='fa fa-cubes'/>
+                            <NavItem id='c8' text='Cube' icon='fa fa-cube'/>
+                            <NavItem id='c9' text='Add Customer' icon='fa fa-cubes'/>
+                            <NavItem id='c10' text='Cube' icon='fa fa-cube'/>
                         </NavSection>
                     </SideNav>
                 </SideMenu>

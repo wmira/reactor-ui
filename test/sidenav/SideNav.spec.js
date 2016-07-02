@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import should from 'should';
 import sinon from 'sinon';
 
-import { SideNav, NavItem, DEFAULT_THEME } from 'reactor-ui/sidenav';
+import { SideNav, NavItem, NavGroup, DEFAULT_THEME } from 'reactor-ui/sidenav';
 import styles from 'reactor-ui/sidenav/SideNav.css';
 
 import { resolveCls } from '../resolveCls';
@@ -60,5 +60,17 @@ describe('SideNav tests', () => {
         //all should work
         single.simulate('click');
         should(onClick.callCount).be.exactly(1);
+    });
+
+    it('renders groups', () => {
+        const wrapper = shallow(
+            <NavGroup id='cube' text='Cube' icon='fa fa-cube'>
+                <NavItem id='dollar' text='Dollar' icon='fa fa-dollar'></NavItem>
+            </NavGroup>,
+            { context: {ruiSideNavTheme: DEFAULT_THEME }}
+        );
+        //there will be 3 nav items here, 1 is for main, 2, for the group, 3 is for the actual navitem
+        should(wrapper.find(NavItem).length).be.exactly(3);
+        should(wrapper.find(css('sidenav-grp')).length).be.exactly(1);
     });
 });

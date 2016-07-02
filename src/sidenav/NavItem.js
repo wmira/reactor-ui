@@ -34,14 +34,16 @@ export class NavItem extends React.Component {
     }
 
     onClick = () => {
-        this.props.onClick(this.props.id);
+        if ( this.props.onClick ) {
+            this.props.onClick(this.props.id);
+        }
     }
 
     render() {
         const { props } = this;
         const { selectedId, id } = props;
         const { hover } = this.state;
-        const selected = selectedId === id;
+        const selected = selectedId === id && selectedId !== undefined;
         const { ruiSideNavTheme = DEFAULT_THEME } = this.context;
         const { colors } = ruiSideNavTheme;
         const { selection, highlight } = colors;

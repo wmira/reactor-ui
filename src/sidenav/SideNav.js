@@ -14,8 +14,22 @@ export const DEFAULT_THEME = freeze({ colors: { selection: '#f4f4f4', text: '#3a
 
 export const NavSection = ( {children}) => ({children});
 
-const navItemCloner = (onClick, selectedId) => child => {
-    return cloneElement(child, {onClick, selectedId});
+const navItemCloner = (onClick, selectedId, style) => child => {
+    return cloneElement(child, {onClick, selectedId, style});
+};
+
+export const createNavItems = (children, onClick, selectedId, style = {}) => {
+
+    const cloneNavItem = navItemCloner(onClick, selectedId, style);
+
+    return Children.map( children, child => {
+        if ( child.type === NavSection ) {
+            const grandC = child.props.children;
+            const sectionE = <NavItem selectedId={selectedId} onClick={noop}><SNav {...child.props} /></NavItem>;
+            return [sectionE, ...Children.map(grandC,cloneNavItem) ];
+        }
+        return cloneNavItem(child);
+    });
 };
 
 /**
@@ -47,27 +61,30 @@ export class SideNav extends React.Component {
         onClick(id);
     }
 
-    createNavigation = () => {
-        const { children, selectedId } = this.props;
-        const cloneNavItem = navItemCloner(this.onClick, selectedId);
-
-        //Children.map already flatMaps result
-        return Children.map( children, child => {
-            if ( child.type === NavSection ) {
-                const grandC = child.props.children;
-                const sectionE = <NavItem selectedId={selectedId} onClick={noop}><SNav {...child.props} /></NavItem>;
-                return [sectionE, ...Children.map(grandC,cloneNavItem) ];
-            }
-            return cloneNavItem(child);
-        });
-
-    }
+    // createNavItems = () => {
+    //     const { children, selectedId } = this.props;
+    //     const cloneNavItem = navItemCloner(this.onClick, selectedId);
+    //
+    //     //Children.map already flatMaps result
+    //     return Children.map( children, child => {
+    //         if ( child.type === NavSection ) {
+    //             const grandC = child.props.children;
+    //             const sectionE = <NavItem selectedId={selectedId} onClick={noop}><SNav {...child.props} /></NavItem>;
+    //             return [sectionE, ...Children.map(grandC,cloneNavItem) ];
+    //         }
+    //         return cloneNavItem(child);
+    //     });
+    //
+    // }
 
     render() {
+        const { children, selectedId } = this.props;
+        const { ruiSideNavTheme: { colors } } = this.getChildContext();
+        const { text } = colors;
         return (
             <FlexColumn style={{width: '100%'}}>
-                <ul className={styles['sidenav']} style={{color: this.getChildContext().ruiSideNavTheme.colors.text}}>
-                    {this.createNavigation()}
+                <ul className={styles['sidenav']} style={{color: text}}>
+                    {createNavItems(children, this.onClick, selectedId)}
                 </ul>
             </FlexColumn>
         );

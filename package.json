@@ -7,7 +7,8 @@
     "build-npm": "babel -d dist/ ./src/js && cp README.md dist/ && cp package.json dist/",
     "dev": "webpack-dev-server --port 8081 --config webpack.dev.config.js --watch ",
     "test": "mocha --require should --require test/setup --recursive --compilers js:babel-register",
-    "test-debug": "iron-node node_modules/mocha/bin/_mocha --require should --require test/setup --recursive --compilers js:babel-register "
+    "test-debug": "iron-node node_modules/mocha/bin/_mocha --require should --require test/setup --recursive --compilers js:babel-register ",
+    "lint": "eslint src/* test/*"
   },
   "repository": {
     "type": "git",
@@ -41,6 +42,7 @@
     "css-modules-require-hook": "^2.1.1",
     "enzyme": "^2.3.0",
     "eslint": "^2.7.0",
+    "eslint-plugin-mocha": "^3.0.0",
     "eslint-plugin-react": "^3.5.1",
     "jsdom": "^6.5.1",
     "mocha": "^2.3.3",

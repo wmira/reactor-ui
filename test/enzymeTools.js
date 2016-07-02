@@ -5,7 +5,6 @@ const hasProps = (props, item) => {
     }
     const keys = Object.keys(props);
     return keys.reduce( (result, key) => {
-        debugger;
         if ( !result ) {
             return result;
         }

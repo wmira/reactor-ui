@@ -18,7 +18,7 @@
         "node": true,
         "mocha": true
     },
-    "plugins": [ "react" ],
+    "plugins": [ "react", "mocha" ],
     "rules": {
         "brace-style": [2, "1tbs"],
         "comma-style": 2,
@@ -32,7 +32,7 @@
         "no-undef": 2,
         "no-unused-vars": [2, {"vars": "all", "args": "after-used"}],
         "react/jsx-no-undef": 2,
-        "react/jsx-quotes": 2,
+        "jsx-quotes": ["error", "prefer-single"],
         "react/jsx-uses-react": 1,
         "react/jsx-uses-vars": 1,
         "react/react-in-jsx-scope": 2,
@@ -40,6 +40,8 @@
         "semi": 2,
         "space-before-blocks": 2,
         "keyword-spacing": 2,
-        "space-in-parens": 0
+        "space-in-parens": 0,
+        "mocha/no-exclusive-tests": "error",
+        "no-debugger": "error"
     }
 }
