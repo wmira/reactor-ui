@@ -1,3 +1,9 @@
 {
-    "presets": ["es2015", "react", "stage-2", "stage-0"]
+    "presets": ["es2015", "react", "stage-2", "stage-0"],
+    "plugins": [
+        [ "babel-plugin-webpack-alias", {
+            "config": "webpack.dev.config.js",
+            "findConfig": true
+          } ]
+      ]
 }

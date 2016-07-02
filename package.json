@@ -6,8 +6,8 @@
   "scripts": {
     "build-npm": "babel -d dist/ ./src/js && cp README.md dist/ && cp package.json dist/",
     "dev": "webpack-dev-server --port 8081 --config webpack.dev.config.js --watch ",
-    "test-watch": "mocha --recursive --compilers js:babel-register -w",
-    "test": "mocha --recursive --compilers js:babel-register"
+    "test": "mocha --require should --require test/setup --recursive --compilers js:babel-register",
+    "test-debug": "iron-node node_modules/mocha/bin/_mocha --require should --require test/setup --recursive --compilers js:babel-register "
   },
   "repository": {
     "type": "git",
@@ -30,6 +30,7 @@
     "babel-core": "^6.2.1",
     "babel-eslint": "^6.0.4",
     "babel-loader": "^6.2.0",
+    "babel-plugin-webpack-alias": "^1.3.1",
     "babel-preset-es2015": "^6.1.18",
     "babel-preset-react": "^6.1.18",
     "babel-preset-stage-0": "^6.5.0",
@@ -37,15 +38,17 @@
     "babel-register": "^6.3.13",
     "classnames": "^1.2.0",
     "css-loader": "^0.23.1",
-    "css-modules-require-hook": "^2.1.0",
+    "css-modules-require-hook": "^2.1.1",
     "enzyme": "^2.3.0",
     "eslint": "^2.7.0",
     "eslint-plugin-react": "^3.5.1",
     "jsdom": "^6.5.1",
     "mocha": "^2.3.3",
-    "react": "^15.1.0",
-    "react-dom": "^15.1.0",
+    "react": "^15.2.0",
+    "react-addons-test-utils": "^15.2.0",
+    "react-dom": "^15.2.0",
     "should": "^7.1.1",
+    "sinon": "^1.17.4",
     "webpack": "^1.13.1"
   }
 }
