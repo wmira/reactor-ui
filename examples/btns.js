@@ -2,7 +2,6 @@ import React from 'react';
 import { render } from 'react-dom';
 
 import { Btn, BtnGrp } from 'reactor-ui/buttons';
-import { HItems } from 'reactor-ui/containers';
 
 const BtnPrimary = (props) => (
     <Btn {...props} theme={{background: '#19B5FE'}}/>
