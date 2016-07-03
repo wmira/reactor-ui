@@ -1,0 +1,12 @@
+
+
+:local(.btn) {
+    border: 1px solid #EEE;
+    display: inline-block;
+    padding: 5px 10px;
+    letter-spacing: .5px;
+    font-size: 1em;
+    line-height: 1.4;
+    white-space: nowrap;    
+    cursor: pointer;
+}

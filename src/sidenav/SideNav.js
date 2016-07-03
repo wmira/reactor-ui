@@ -1,36 +1,14 @@
 
-import React, { Children, PropTypes, cloneElement } from 'react';
-
-import { NavItem } from './NavItem';
-import { SNav } from './Nav';
+import React, { PropTypes } from 'react';
 
 import { FlexColumn } from 'reactor-ui/containers/Flex';
 import styles from './SideNav.css';
 import { noop } from 'reactor-ui/util';
 
+import { createNavItems } from './createNavItems';
 
-const { freeze } = Object;
-export const DEFAULT_THEME = freeze({ colors: { selection: '#f4f4f4', text: '#3a5266', highlight: '#c0392b' } });
+export const DEFAULT_THEME = Object.freeze({ colors: { selection: '#f4f4f4', text: '#3a5266', highlight: '#c0392b' } });
 
-export const NavSection = ( {children}) => ({children});
-
-const navItemCloner = (onClick, selectedId, style) => child => {
-    return cloneElement(child, {onClick, selectedId, style});
-};
-
-export const createNavItems = (children, onClick, selectedId, style = {}) => {
-
-    const cloneNavItem = navItemCloner(onClick, selectedId, style);
-
-    return Children.map( children, child => {
-        if ( child.type === NavSection ) {
-            const grandC = child.props.children;
-            const sectionE = <NavItem selectedId={selectedId} onClick={noop}><SNav {...child.props} /></NavItem>;
-            return [sectionE, ...Children.map(grandC,cloneNavItem) ];
-        }
-        return cloneNavItem(child);
-    });
-};
 
 /**
  * Side Bar Navigation component
@@ -60,22 +38,6 @@ export class SideNav extends React.Component {
         const { onClick } = this.props;
         onClick(id);
     }
-
-    // createNavItems = () => {
-    //     const { children, selectedId } = this.props;
-    //     const cloneNavItem = navItemCloner(this.onClick, selectedId);
-    //
-    //     //Children.map already flatMaps result
-    //     return Children.map( children, child => {
-    //         if ( child.type === NavSection ) {
-    //             const grandC = child.props.children;
-    //             const sectionE = <NavItem selectedId={selectedId} onClick={noop}><SNav {...child.props} /></NavItem>;
-    //             return [sectionE, ...Children.map(grandC,cloneNavItem) ];
-    //         }
-    //         return cloneNavItem(child);
-    //     });
-    //
-    // }
 
     render() {
         const { children, selectedId } = this.props;

@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 import { mergeStyles as mstyles, ternStyle as tstyle } from 'reactor-ui/util/mergeStyles';
 import { NavItem } from './NavItem';
 import styles from './SideNav.css';
-import { createNavItems } from './SideNav';
+import { createNavItems } from './createNavItems';
 
 const EXTRA_GROUP_STYLE = {padding: '10px 0px 0px 10px', margin: '0px -18px 0px -30px'};
 
@@ -14,7 +14,8 @@ export class NavGroup extends React.Component {
         selectedId: PropTypes.string,
         onClick: PropTypes.func,
         text: PropTypes.string,
-        icon: PropTypes.string
+        icon: PropTypes.string,
+        onClick: PropTypes.func
     }
 
     constructor(props) {

@@ -20,6 +20,10 @@ describe('mergeStyles tests', () => {
             should(result).have.property('isFalsy', true);
         });
     });
+    it('removes undefined entries', () => {
+        const result = mstyles({z: 'z'}, tstyle(true, { a: undefined, b: 'ok' }));
+        should(result.hasOwnProperty('a')).be.exactly(false);
+    });
     it('ternStyle on truth argument works', () => {
         const truthys = [{}, true, 12, 'a'];
 
@@ -28,4 +32,5 @@ describe('mergeStyles tests', () => {
             should(result).have.property('background', 'red');
         });
     });
+
 });
