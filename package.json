@@ -2,12 +2,15 @@
   "name": "reactor-ui",
   "version": "0.0.18",
   "description": "Reactor UI Kit",
-  "main": "lib",
+  "main": "dist/",
+  "module": "dist/",
+  "jsnext:main": "dist/",
   "scripts": {
-    "build-npm": "babel -d dist/ ./src/js && cp README.md dist/ && cp package.json dist/",
+    "build": "babel -D -d dist/ ./src",
+    "build-watch": "babel -D -w -d dist/ ./src",
     "dev": "webpack-dev-server --port 8081 --config webpack.dev.config.js --watch ",
-    "test": "mocha --require should --require test/setup --recursive --compilers js:babel-register",
-    "test-debug": "iron-node node_modules/mocha/bin/_mocha --require should --require test/setup --recursive --compilers js:babel-register ",
+    "test": "NODE_ENV=test mocha --require should --require test/setup --recursive --compilers js:babel-register",
+    "test-debug": "NODE_ENV=test iron-node node_modules/mocha/bin/_mocha --require should --require test/setup --recursive --compilers js:babel-register ",
     "lint": "eslint src/* test/*"
   },
   "repository": {
@@ -41,20 +44,23 @@
     "css-loader": "^0.23.1",
     "css-modules-require-hook": "^2.1.1",
     "enzyme": "^2.3.0",
-    "eslint": "^2.7.0",
-    "eslint-plugin-mocha": "^3.0.0",
-    "eslint-plugin-react": "^3.5.1",
+    "flow-bin": "^0.27.0",
     "jsdom": "^9.4.0",
     "mocha": "^2.3.3",
+    "react": "^15.2.0",
     "react-addons-test-utils": "^15.2.0",
+    "react-dom": "^15.2.0",
     "should": "^9.0.2",
     "sinon": "^1.17.4",
     "webpack": "^1.13.1",
-    "react": "^15.2.0",
-    "react-dom": "^15.2.0"
+    "eslint": "^3.2.0",
+    "eslint-plugin-mocha": "^4.2.0",
+    "eslint-plugin-react": "^5.2.2"
   },
   "peerDependencies": {
     "react": "^15.2.0",
     "react-dom": "^15.2.0"
+  },
+  "dependencies": {
   }
 }
