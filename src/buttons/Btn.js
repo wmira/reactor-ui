@@ -12,6 +12,11 @@ export const IconText = ({text, icon}) => (
     </span>
 );
 
+IconText.propTypes = {
+    icon: PropTypes.string,
+    text: PropTypes.string
+};
+
 export class Btn extends React.Component {
 
     static propTypes = {

@@ -1,4 +1,4 @@
-import React, { Children } from 'react';
+import React, { PropTypes, Children } from 'react';
 
 export const HItems = ({children}) => (
     <span>
@@ -7,3 +7,7 @@ export const HItems = ({children}) => (
         })}
     </span>
 );
+
+HItems.propTypes = {
+    children: PropTypes.node
+};

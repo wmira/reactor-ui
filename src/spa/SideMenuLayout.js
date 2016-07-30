@@ -10,11 +10,22 @@ export const SideMenu = ({width = 220, children, background = '#FFF'}) => (
     </NavItem>
 );
 
+SideMenu.propTypes = {
+    width: PropTypes.number,
+    children: PropTypes.node,
+    background: PropTypes.string
+};
+
 export const Content = ({children, background = '#FFF'}) => (
     <SectionItem background={background}>
         {children}
     </SectionItem>
 );
+
+Content.propTypes = {
+    children: PropTypes.node,
+    background: PropTypes.string
+};
 
 export class SideMenuLayout extends Component {
     static propTypes = {
