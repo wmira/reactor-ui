@@ -1,6 +1,6 @@
 
 import React, { PropTypes } from 'react';
-import { mergeStyles as mstyles, ternStyle as tstyle } from 'reactor-ui/util/mergeStyles';
+import { mergeStyles as mstyles, ternStyle as tstyle } from '../util/mergeStyles';
 import { DEFAULT_THEME } from './SideNav';
 import { Nav } from './Nav';
 import styles from './SideNav.css';

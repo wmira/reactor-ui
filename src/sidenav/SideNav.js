@@ -1,9 +1,9 @@
 
 import React, { PropTypes } from 'react';
 
-import { FlexColumn } from 'reactor-ui/containers/Flex';
+import { FlexColumn } from '../containers/Flex';
 import styles from './SideNav.css';
-import { noop } from 'reactor-ui/util';
+import { noop } from '../util';
 
 import { createNavItems } from './createNavItems';
 

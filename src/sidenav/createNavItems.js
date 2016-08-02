@@ -4,7 +4,7 @@ import { NavSection } from './NavSection';
 import { NavItem } from './NavItem';
 import { SNav } from './Nav';
 
-import { noop } from 'reactor-ui/util';
+import { noop } from '../util';
 
 const navItemCloner = (onClick, selectedId, style) => child => {
     return cloneElement(child, {onClick, selectedId, style});
