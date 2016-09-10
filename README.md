@@ -153,7 +153,20 @@ To change the styles, just override the css and load your overrides
    * npm install -g webpack webpack-dev-server
    * git clone https://github.com/wmira/reactor-ui.git
    * cd reactor-ui
-   * npm install   
+   * npm install  
+
+## Running examples and development
+
+You need to run 
+
+`npm run dev`
+
+but you need to pass extra arguments specifying the entry point for webpack.
+To run the sidenav.js example
+
+`npm run dev -- examples/sidenav.js`
+
+do the same for other examples.
 
 ## Testing
 
