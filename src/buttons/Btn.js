@@ -24,7 +24,7 @@ const SCHEMES = {
     danger: 'danger'
 };
 
-const isScheme = (schemeToCompare, propsScheme, disabled ) => propsScheme === schemeToCompare && !Boolean(disabled)
+const isScheme = (schemeToCompare, propsScheme, disabled ) => propsScheme === schemeToCompare && !Boolean(disabled);
 
 const createClassnames = (props) => {
 
