@@ -38,7 +38,7 @@ export class SideNav extends React.Component {
 
     render() {
         const { children, selectedId, scheme, style, highlightScheme } = this.props;
-       
+
         const containerClass = cx({
             'rui-snav-clight': scheme === 'default',
             'rui-snav-cdark': scheme !== 'default'

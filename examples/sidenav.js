@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { render } from 'react-dom';
 
-import { SideNav, NavItem, NavSection, NavGroup } from 'reactor-ui/sidenav';
+import { SideNav, NavItem, NavGroup } from 'reactor-ui/sidenav';
 import { FlexRow } from 'reactor-ui/containers/Flex';
 
 import 'reactor-ui/css/rui.css';

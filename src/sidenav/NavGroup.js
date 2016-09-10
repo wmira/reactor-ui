@@ -15,7 +15,8 @@ export class NavGroup extends React.Component {
         text: PropTypes.string,
         icon: PropTypes.string,
         onClick: PropTypes.func,
-        highlightScheme: PropTypes.string
+        highlightScheme: PropTypes.string,
+        scheme: PropTypes.string
     }
 
     constructor(props) {

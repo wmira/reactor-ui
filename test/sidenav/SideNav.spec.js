@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import should from 'should';
 import sinon from 'sinon';
 
-import { SideNav, NavItem, NavGroup, DEFAULT_THEME } from 'reactor-ui/sidenav';
+import { SideNav, NavItem, NavGroup } from 'reactor-ui/sidenav';
 
 import { findTypeWithProps } from '../enzymeTools';
 
