@@ -10,6 +10,12 @@ Reactor UI is a reusable UI kit written in React.
 
 Note that this is very much on its initial development phase, a work in progress.
 
+# Table of Contents
+1. [Motivation](#motivation)
+2. [Usage](#usage)
+3. [Buttons](#buttons)
+3. [SideNav](#sidenav)
+
 # Motivation
 
 The aim for this project is to be used as a base for developers creating custom ui kits in their
