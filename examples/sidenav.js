@@ -4,7 +4,6 @@ import { render } from 'react-dom';
 import { SideNav, NavItem, NavGroup } from 'reactor-ui/sidenav';
 import { FlexRow } from 'reactor-ui/containers/Flex';
 
-import 'reactor-ui/css/rui.css';
 import 'reactor-ui/css/sidenav.css';
 
 const Container = (props) => (
