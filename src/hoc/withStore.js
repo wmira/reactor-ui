@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 /**
  * A poor mans store
  */
- //withStore :: reducer -> initialState  -> (Component -> Component)
+ //withStore :: ( Obj -> Obj -> Obj ) -> Obj  -> (Component -> Component)
 export const withStore = (reducer, initialState) => Comp => {
 
     return class extends Component {
@@ -46,16 +46,13 @@ const dispatchAction = ({dispatch, setState, getState, reducer}, fsa) => {
         const { payload, type } = fsa;
         let thennable = null;
 
-        if ( payload ) {
-            if ( payload.then ) {
-                //payload is a promise
-                thennable = payload;
-            }
-        } else {
-            if ( fsa.then ) { //eslint-disable-line
-                thennable = fsa;
-            }
+        if ( payload && payload.then ) {
+            //payload is a promise
+            thennable = payload;
+        } else if ( fsa.then ) {
+            thennable = fsa;
         }
+
         if ( thennable ) {
             thennable.then( resolvedPayload => this.setState( (prevState) => reducer(prevState, { type, payload: resolvedPayload} )));
         } else {

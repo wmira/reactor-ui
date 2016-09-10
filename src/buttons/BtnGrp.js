@@ -2,14 +2,13 @@
 import React, { cloneElement, Children, PropTypes } from 'react';
 import { InlineBlk } from '../containers/InlineBlk';
 
-const INACTIVE_COLOR = '#bdc3c7';
-export const INACTIVE_THEME = Object.freeze({ background: INACTIVE_COLOR, hover: INACTIVE_COLOR});
 export class BtnGrp extends React.Component {
 
     static propTypes = {
         children: PropTypes.node.isRequired,
         active: PropTypes.string,
-        onClick: PropTypes.func
+        onClick: PropTypes.func,
+        scheme: PropTypes.string
     }
 
     constructor(props) {
@@ -23,13 +22,14 @@ export class BtnGrp extends React.Component {
     }
 
     render() {
-        const { children, active } = this.props;
+        const { scheme: userScheme, children, active } = this.props;
+
         return (
             <InlineBlk>
-                {Children.map(children, (child) => {
+                { Children.map(children, (child) => {
                     const value = child.props.value;
-                    const theme = active === value ? {} : INACTIVE_THEME;
-                    return cloneElement(child, { theme , onClick: this.onClick } );
+                    const scheme = active === value ? userScheme : 'default';
+                    return cloneElement(child, { scheme , onClick: this.onClick } );
                 })}
             </InlineBlk>
         );

@@ -5,8 +5,6 @@ import should from 'should';
 import { findTypeWithProps } from '../enzymeTools';
 import { BtnGrp, Btn } from 'reactor-ui/buttons';
 
-import { INACTIVE_THEME } from 'reactor-ui/buttons/BtnGrp';
-
 describe('BtnGrp tests', () => {
 
     const create = (active, onClick) => {
@@ -23,6 +21,6 @@ describe('BtnGrp tests', () => {
         should(wrapper.find(Btn).length).be.exactly(2);
         const findInactive = findTypeWithProps(Btn, { value: 'diamond'});
         const activeBtn = wrapper.findWhere(findInactive);
-        should(activeBtn.prop('theme')).be.exactly(INACTIVE_THEME);
+        should(activeBtn).be.ok();
     });
 });

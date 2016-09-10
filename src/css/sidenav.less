@@ -1,0 +1,75 @@
+
+@import "variables.less";
+
+
+.rui-snav {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;
+}
+
+.rui-snav-clight {
+    background: @white2;
+    color: @dark;
+}
+
+.rui-snav-cdark {
+    background: @dark2;
+    color: @white;
+}
+
+.rui-snav-item-green:hover {
+    background: @greendark;
+}
+
+.rui-snav-item-blue:hover {
+    background: @bluedark;
+}
+.rui-snav-item-danger:hover {
+    background: @dangerdark;
+}
+.rui-snav-item-warning:hover {
+    background: @warningdark;
+}
+
+.rui-snav-item-green.rui-snav-item-selected {
+    background: @greendark;
+}
+
+.rui-snav-item-blue.rui-snav-item-selected {
+    background: @bluedark;
+}
+
+.rui-snav-item-warning.rui-snav-item-selected {
+    background: @warningdark;
+}
+
+.rui-snav-item-danger.rui-snav-item-selected {
+    background: @dangerdark;
+}
+
+.rui-snav-item-green.rui-snav-item-selected.rui-snav-item-text-dark, 
+.rui-snav-item-blue.rui-snav-item-selected.rui-snav-item-text-dark, 
+.rui-snav-item-warning.rui-snav-item-selected.rui-snav-item-text-dark,
+.rui-snav-item-danger.rui-snav-item-selected.rui-snav-item-text-dark {
+    color: @white !important;
+}
+
+.rui-snav-item-text-dark:hover {
+    color: @white !important;
+}
+
+.rui-snav-grp {
+    transition: height 0.15s ease-out;
+}
+
+.rui-snav-nav {
+    padding: 12px 16px;
+    cursor: pointer;
+    border-left: 4px solid transparent;
+}
+
+.rui-snav-section {
+    font-weight: bold;
+}

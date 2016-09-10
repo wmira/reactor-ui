@@ -1,17 +1,19 @@
 {
   "name": "reactor-ui",
-  "version": "0.0.18",
+  "version": "0.1.0",
   "description": "Reactor UI Kit",
   "main": "dist/",
   "module": "dist/",
   "jsnext:main": "dist/",
   "scripts": {
     "build": "babel -D -d dist/ ./src",
-    "build-watch": "babel -D -w -d dist/ ./src",
+    "build-watch": "babel -D -w -d dist/ ./src ",
+    "lessc": "lessc src/css/rui.less dist/css/rui.css ; lessc src/css/buttons.less dist/css/buttons.css; lessc src/css/sidenav.less dist/css/sidenav.css",
     "dev": "webpack-dev-server --port 8081 --config webpack.dev.config.js --watch ",
     "test": "NODE_ENV=test mocha --require should --require test/setup --recursive --compilers js:babel-register",
     "test-debug": "NODE_ENV=test iron-node node_modules/mocha/bin/_mocha --require should --require test/setup --recursive --compilers js:babel-register ",
-    "lint": "eslint src/* test/*"
+    "lint": "eslint src/* test/*",
+    "dist": "cp README.md dist; cp package.json dist; npm run build; npm run lessc"
   },
   "repository": {
     "type": "git",
@@ -31,36 +33,45 @@
   "author": "Warren Mira warrenmira@gmail.com",
   "license": "MIT",
   "devDependencies": {
-    "babel-core": "^6.10.4",
-    "babel-eslint": "^6.1.0",
+    "autoprefixer": "^6.3.7",
+    "babel-core": "^6.13.2",
+    "babel-eslint": "^6.1.2",
     "babel-loader": "^6.2.4",
-    "babel-plugin-webpack-alias": "^1.3.1",
-    "babel-preset-es2015": "^6.9.0",
+    "babel-plugin-webpack-alias": "^1.6.0",
+    "babel-preset-es2015": "^6.13.2",
     "babel-preset-react": "^6.11.1",
-    "babel-preset-stage-0": "^6.5.0",
-    "babel-preset-stage-2": "^6.11.0",
-    "babel-register": "^6.9.0",
+    "babel-preset-stage-2": "^6.13.0",
+    "babel-register": "^6.11.6",
     "classnames": "^2.2.5",
     "css-loader": "^0.23.1",
     "css-modules-require-hook": "^2.1.1",
-    "enzyme": "^2.3.0",
+    "enzyme": "^2.4.1",
+    "eslint": "^3.2.0",
+    "eslint-plugin-mocha": "^4.2.0",
+    "eslint-plugin-react": "^5.2.2",
+    "fkit-js": "0.0.1",
     "flow-bin": "^0.27.0",
-    "jsdom": "^9.4.0",
+    "jsdom": "^9.4.1",
+    "less": "^2.7.1",
     "mocha": "^2.3.3",
     "react": "^15.2.0",
     "react-addons-test-utils": "^15.2.0",
     "react-dom": "^15.2.0",
     "should": "^9.0.2",
-    "sinon": "^1.17.4",
+    "sinon": "^1.17.5",
+    "style-loader": "^0.13.1",
     "webpack": "^1.13.1",
-    "eslint": "^3.2.0",
-    "eslint-plugin-mocha": "^4.2.0",
-    "eslint-plugin-react": "^5.2.2"
+    "watch": "^0.19.2"
   },
   "peerDependencies": {
     "react": "^15.2.0",
     "react-dom": "^15.2.0"
   },
   "dependencies": {
+    "fkit-js": "0.0.2",
+    "react": "^15.2.0",
+    "react-addons-pure-render-mixin": "^15.2.0",
+    "react-addons-test-utils": "^15.2.0",
+    "react-dom": "^15.2.0"    
   }
 }

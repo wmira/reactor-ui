@@ -1,9 +1,8 @@
 import React, { PropTypes } from 'react';
 import cx from 'classnames';
-import styles from './Btn.css';
-import { mergeStyles as mstyles, ternStyle as tstyle, overrideStyles as ostyles } from 'reactor-ui/util/mergeStyles';
 
 export const DEFAULT_THEME = {  color: '#FFF', background: '#26a69a', hover: '#2bbbad' };
+
 
 export const IconText = ({text, icon}) => (
     <span>
@@ -17,6 +16,32 @@ IconText.propTypes = {
     text: PropTypes.string
 };
 
+const SCHEMES = {
+    default: 'default',
+    primary: 'primary',
+    success: 'success',
+    warning: 'warning',
+    danger: 'danger'
+};
+
+const isScheme = (schemeToCompare, propsScheme, disabled ) => propsScheme === schemeToCompare && !Boolean(disabled)
+
+const createClassnames = (props) => {
+
+    const { scheme, disabled } = props;
+
+    return cx(
+        'rui-btn',
+        {
+            'rui-btn-default': isScheme(SCHEMES.default, scheme, disabled),
+            'rui-btn-primary': isScheme(SCHEMES.primary, scheme, disabled),
+            'rui-btn-success': isScheme(SCHEMES.success, scheme, disabled),
+            'rui-btn-warning': isScheme(SCHEMES.warning, scheme, disabled ),
+            'rui-btn-danger': isScheme(SCHEMES.danger, scheme, disabled)
+        }
+    );
+};
+
 export class Btn extends React.Component {
 
     static propTypes = {
@@ -24,24 +49,20 @@ export class Btn extends React.Component {
         style: PropTypes.object,
         icon: PropTypes.string,
         text: PropTypes.string,
-        theme: PropTypes.object,
         scheme: PropTypes.string,
         onClick: PropTypes.func,
         children: PropTypes.node,
         value: PropTypes.string
     }
 
+    static defaultProps = {
+        scheme: SCHEMES.default,
+        disabled: Boolean(false)
+    }
+
     constructor(props) {
         super(props);
         this.state = { hovered: false };
-    }
-
-    onMouseOver = () => {
-        this.setState( { hovered: true });
-    }
-
-    onMouseOut = () => {
-        this.setState( { hovered: false });
     }
 
     dispatchOnClick = (e) => {
@@ -51,22 +72,16 @@ export class Btn extends React.Component {
     }
 
     render() {
-        const { children, scheme = 'normal', style, icon, text, theme = {}, ...rest } = this.props;
-        const themeToUse = ostyles(DEFAULT_THEME, theme);
-        const { hovered } = this.state;
+        const { props } = this;
+        const { children, disabled, scheme,   //eslint-disable-line no-unused-vars
+            style, icon, text, ...rest } = props;
 
-        const mergeStyle = mstyles(
-            {color: themeToUse.color, background: themeToUse.background },
-            tstyle(hovered, { background: themeToUse.hover }),
-            style
-        );
+        const classNames = createClassnames(props);
 
-        const classNames = cx(
-            styles['btn'],
-            styles[`btn-${scheme}`]
-        );
-        return (<button {...rest} onClick={this.dispatchOnClick} ref='btn' className={classNames}
-            style={mergeStyle} onMouseOver={this.onMouseOver} onMouseOut={this.onMouseOut}>
+        return (
+            <button {...rest} disabled={disabled} onClick={this.dispatchOnClick}
+                        ref='btn' className={classNames}
+                style={style} onMouseOver={this.onMouseOver} onMouseOut={this.onMouseOut}>
             { children ? children : <IconText icon={icon} text={text} /> }
         </button>);
     }

@@ -1,6 +1,6 @@
 
 import React, { Component, PropTypes } from 'react';
-import { Flex, NavItem, SectionItem } from 'reactor-ui/containers/Flex';
+import { Flex, NavItem, SectionItem } from '../containers/Flex';
 
 import './SideMenuLayout.css';
 

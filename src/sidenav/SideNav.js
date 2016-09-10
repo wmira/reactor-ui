@@ -1,13 +1,13 @@
 
 import React, { PropTypes } from 'react';
+import cx from 'classnames';
 
 import { FlexColumn } from '../containers/Flex';
-import styles from './SideNav.css';
 import { noop } from '../util';
-
+import { SCHEMES } from './schemes';
 import { createNavItems } from './createNavItems';
 
-export const DEFAULT_THEME = Object.freeze({ colors: { selection: '#f4f4f4', text: '#3a5266', highlight: '#c0392b' } });
+//export const DEFAULT_THEME = Object.freeze({ colors: { selection: '#f4f4f4', text: '#3a5266', highlight: '#c0392b' } });
 
 
 /**
@@ -17,21 +17,18 @@ export class SideNav extends React.Component {
 
     static propTypes = {
         children: PropTypes.node,
-        theme: PropTypes.object,
+        scheme: PropTypes.string,
         selectedId: PropTypes.string.isRequired,
-        onClick: PropTypes.func
+        onClick: PropTypes.func,
+        style: PropTypes.object,
+        highlightScheme: PropTypes.oneOf(Object.keys(SCHEMES))
     }
 
     static defaultProps = {
-        onClick: noop
-    }
-
-    static childContextTypes = {
-        ruiSideNavTheme: PropTypes.object
-    }
-    getChildContext = () => {
-        const { colors } = this.props.theme || {};
-        return { ruiSideNavTheme: { colors: {...colors, ...DEFAULT_THEME.colors }} };
+        onClick: noop,
+        scheme: 'default',
+        style: {},
+        highlightScheme: SCHEMES.danger
     }
 
     onClick = (id) => {
@@ -40,13 +37,17 @@ export class SideNav extends React.Component {
     }
 
     render() {
-        const { children, selectedId } = this.props;
-        const { ruiSideNavTheme: { colors } } = this.getChildContext();
-        const { text } = colors;
+        const { children, selectedId, scheme, style, highlightScheme } = this.props;
+       
+        const containerClass = cx({
+            'rui-snav-clight': scheme === 'default',
+            'rui-snav-cdark': scheme !== 'default'
+        });
+        console.log('selectedId ', highlightScheme, selectedId);
         return (
-            <FlexColumn style={{width: '100%'}}>
-                <ul className={styles['sidenav']} style={{color: text}}>
-                    {createNavItems(children, this.onClick, selectedId)}
+            <FlexColumn className={containerClass} style={{width: '100%', height: '100%', ...style}}>
+                <ul className={'rui-snav'} >
+                    {createNavItems({ children, onClick: this.onClick, selectedId, scheme, highlightScheme })}
                 </ul>
             </FlexColumn>
         );

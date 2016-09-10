@@ -1,2 +1,3 @@
-export withStore from './withStore';
-export divWith from './divWith';
+export { withStore } from './withStore';
+export { divWith } from './elementWith';
+export { elementWith } from './elementWith';

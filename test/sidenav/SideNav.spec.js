@@ -4,12 +4,9 @@ import should from 'should';
 import sinon from 'sinon';
 
 import { SideNav, NavItem, NavGroup, DEFAULT_THEME } from 'reactor-ui/sidenav';
-import styles from 'reactor-ui/sidenav/SideNav.css';
 
-import { resolveCls } from '../resolveCls';
 import { findTypeWithProps } from '../enzymeTools';
 
-const css = resolveCls(styles);
 describe('SideNav tests', () => {
 
     const findSingleNavItem = findTypeWithProps(NavItem, { id: 'dollar'});
@@ -18,8 +15,7 @@ describe('SideNav tests', () => {
             <SideNav selectedId={selectedId} onClick={onClick}>
                 <NavItem id='dollar' text='Dollar' icon='fa fa-dollar'></NavItem>
                 <NavItem id='cube' text='Cube' icon='fa fa-cube'></NavItem>
-            </SideNav>,
-            { context: {ruiSideNavTheme: DEFAULT_THEME }}
+            </SideNav>
         );
     };
     it('Renders a list of navigation items', () => {
@@ -29,11 +25,10 @@ describe('SideNav tests', () => {
                 <NavItem id='dollar' text='Dollar' icon='fa fa-dollar'></NavItem>
                 <NavItem id='cube' text='Cube' icon='fa fa-cube'></NavItem>
                 <NavItem id='comment' text='Comment' icon='fa fa-comment-o'></NavItem>
-            </SideNav>,
-            { context: {ruiSideNavTheme: DEFAULT_THEME }}
+            </SideNav>
         );
         should(wrapper.find(NavItem).length).be.exactly(3);
-        should(wrapper.find(css('sidenav')).length).be.exactly(1);
+        should(wrapper.find('.rui-snav').length).be.exactly(1);
 
     });
 
@@ -66,11 +61,10 @@ describe('SideNav tests', () => {
         const wrapper = shallow(
             <NavGroup id='cube' text='Cube' icon='fa fa-cube'>
                 <NavItem id='dollar' text='Dollar' icon='fa fa-dollar'></NavItem>
-            </NavGroup>,
-            { context: {ruiSideNavTheme: DEFAULT_THEME }}
+            </NavGroup>
         );
         //there will be 3 nav items here, 1 is for main, 2, for the group, 3 is for the actual navitem
         should(wrapper.find(NavItem).length).be.exactly(3);
-        should(wrapper.find(css('sidenav-grp')).length).be.exactly(1);
+        should(wrapper.find('.rui-snav-grp').length).be.exactly(1);
     });
 });

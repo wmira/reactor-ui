@@ -12,7 +12,7 @@ NavItem.propTypes = {
 };
 
 export const SectionItem = ({background, flex, children}) => (
-    <section style={{background, flex: flex || '1 1'}}>{children}</section>
+    <section style={{ background, flex: flex || '1 1' }}>{children}</section>
 );
 
 SectionItem.propTypes = {
@@ -22,14 +22,19 @@ SectionItem.propTypes = {
 };
 
 
-export const Flex = ({style,children}) => <div style={{display: 'flex', ...style}}>{children}</div>;
-export const FlexColumn = (props) => <Flex style={{flexDirection: 'column'}}>{props.children}</Flex>;
+export const Flex = ({className, style,children}) => <div className={className} style={{display: 'flex', ...style}}>{children}</div>;
+export const FlexColumn = (props) => <Flex className={props.className} style={{flexDirection: 'column'}}>{props.children}</Flex>;
+export const FlexRow = (props) => <Flex className={props.className} style={{flexDirection: 'row'}}>{props.children}</Flex>;
 
 Flex.propTypes = {
     children: PropTypes.node,
-    style: PropTypes.object
+    style: PropTypes.object,
+    className: PropTypes.string
 };
 
 FlexColumn.propTypes = {
-    children: PropTypes.node
+    children: PropTypes.node,
+    className: PropTypes.string
 };
+
+FlexRow.propTypes = FlexColumn.propTypes;

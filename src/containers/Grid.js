@@ -1,7 +1,7 @@
 
 import { PropTypes } from  'react';
 
-import divWith from '../hoc/divWith';
+import divWith from '../hoc/elementWith';
 
 /**
  * Uses Bootstraps Grid System.

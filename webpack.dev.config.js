@@ -3,7 +3,7 @@ module.exports = {
     devtool: 'source-map',
     resolve: {
         alias: {
-            'reactor-ui': __dirname + '/src'
+            'reactor-ui': __dirname + '/dist'
         }
     },
     node: {
@@ -14,9 +14,13 @@ module.exports = {
 
     module: {
         loaders: [
-            { test: /\.css$/,loader: 'style-loader!css-loader?localIdentName=[name]_[local]_[hash:base64:5]'},
-            { test: /\.js$/, exclude: /node_modules/, loader: 'babel' }
+            { test: /\.css$/,loader: 'style-loader!css-loader'},
+            { test: /\.js$/, exclude: /node_modules/, loader: 'babel' }            
         ]
+    },
+
+    devServer: {
+        inline: true
     }
 
 };

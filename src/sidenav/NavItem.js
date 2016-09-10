@@ -1,36 +1,33 @@
 
 import React, { PropTypes } from 'react';
-import { mergeStyles as mstyles, ternStyle as tstyle } from '../util/mergeStyles';
-import { DEFAULT_THEME } from './SideNav';
-import { Nav } from './Nav';
-import styles from './SideNav.css';
+import cx from 'classnames';
 
+import { SCHEMES } from './schemes';
+import { Nav } from './Nav';
+
+
+const SCHEMES_STYLE = {
+    [SCHEMES.green]: 'rui-snav-item-green',
+    [SCHEMES.blue]: 'rui-snav-item-blue',
+    [SCHEMES.danger]: 'rui-snav-item-danger',
+    [SCHEMES.warning]: 'rui-snav-item-warning'
+};
 /**
  * Item
  */
 export class NavItem extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.state = { hover: false };
-    }
-
-    static contextTypes = {
-        ruiSideNavTheme: PropTypes.object
-    }
-
     static propTypes = {
         id: PropTypes.string,
         onClick: PropTypes.func,
-        selectedId: PropTypes.string
+        selectedId: PropTypes.string,
+        scheme: PropTypes.string,
+        isGroupSection: PropTypes.bool
     }
 
-    onMouseOver = () => {
-        this.setState( { hover: true });
-    }
-
-    onMouseOut = () => {
-        this.setState( { hover: false });
+    static defaultProps = {
+        scheme: 'default',
+        isGroupSection: false
     }
 
     onClick = () => {
@@ -41,21 +38,19 @@ export class NavItem extends React.Component {
 
     render() {
         const { props } = this;
-        const { selectedId, id } = props;
-        const { hover } = this.state;
+        const { selectedId, id, highlightScheme, scheme, style = {}, isGroupSection } = props;
+
         const selected = selectedId === id && selectedId !== undefined;
-        const { ruiSideNavTheme = DEFAULT_THEME } = this.context;
-        const { colors } = ruiSideNavTheme;
-        const { selection, highlight } = colors;
-        const style = mstyles(
-            tstyle(hover || selected, { background: selection }),
-            tstyle(selected, { borderLeft: `4px solid ${highlight}`}),
-            props.style
-        );
+        console.log('is group section here ', isGroupSection);
+        const className = cx('rui-snav-nav', SCHEMES_STYLE[SCHEMES[highlightScheme]],
+            {
+                'rui-snav-item-text-dark': scheme === 'default' && !isGroupSection,
+                'rui-snav-item-selected': selected
+            });
         return (
-            <li onClick={this.onClick} style={style} onMouseOver={this.onMouseOver}
-                onMouseOut={this.onMouseOut} className={styles['nav']}>
-                {props.children ? props.children : <Nav {...{...props, hover}} /> }
+            <li onClick={this.onClick} style={style}
+                className={className}>
+                {props.children ? props.children : <Nav {...props} /> }
             </li>
         );
     }
