@@ -44,6 +44,7 @@
         "keyword-spacing": 2,
         "space-in-parens": 0,
         "mocha/no-exclusive-tests": "error",
-        "no-debugger": "error"
+        "no-debugger": "error",
+        "no-console": "error"
     }
 }

@@ -3,6 +3,7 @@ module.exports = {
     devtool: 'source-map',
     resolve: {
         alias: {
+            'reactor-ui/css': __dirname + '/dist/css',
             'reactor-ui': __dirname + '/src'
         }
     },

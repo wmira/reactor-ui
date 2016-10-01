@@ -6,6 +6,8 @@ import { FlexRow } from 'reactor-ui/containers/Flex';
 
 import 'reactor-ui/css/sidenav.css';
 
+import { createAndRender } from './index';
+
 const Container = (props) => (
     <div style={{ marginRight: 4, width: 240 }}>
         { props.children }
@@ -72,26 +74,5 @@ const App = React.createClass({
     }
 });
 
-const el = document.createElement('div');
-document.body.appendChild(el);
 
-render(<App />, el);
-// <NavGroup id='3' text='Products' icon='fa fa-cube'>
-//                             <NavItem id='3.1' text='Inventory Levels' icon='fa fa-bar-chart'/>
-//                             <NavItem id='3.2' text='Sales Report' icon='fa fa-dollar'/>
-//                         </NavGroup>
-//  <NavSection title='MAIN'>
-//                             <NavItem id='dollar' text='Dollar' icon='fa fa-dollar'/>
-//                             <NavItem id='cube' text='Cube' icon='fa fa-cube'/>
-//                             <NavItem id='comment' text='Comment' icon='fa fa-comment-o'/>
-//                         </NavSection>
-//                         <NavSection title='PRODUCTS'>
-//                             <NavItem id='addproduct' text='Add Product' icon='fa fa-cubes'/>
-//                             <NavItem id='cube2' text='Cube' icon='fa fa-cube'/>
-//                             <NavGroup id='smenu1' text='Comment' icon='fa fa-bars'>
-//                                 <NavItem id='dollar2' text='Dollar' icon='fa fa-dollar'/>
-//                                 <NavItem id='cube3' text='Cube Sub 1' icon='fa fa-cube'/>
-//                                 <NavItem id='cube4' text='Cube Sub 2' icon='fa fa-cube'/>
-//                             </NavGroup>
-//                             <NavItem id='comment2' text='Comment' icon='fa fa-comment-o'></NavItem>
-//                         </NavSection>
+createAndRender(App);

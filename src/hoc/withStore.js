@@ -11,25 +11,33 @@ export const withStore = (reducer, initialState) => Comp => {
         constructor(props) {
             super(props);
             this.state = initialState;
-
+            this.subscribers = [];
             //create store shape
-            const getState = this.getState;
-            const dispatch = this.dispatch;
-
-            this.store = { getState, dispatch };
+            const { getState, dispatch, subscribe } = this;
+            this.bindedSetState = (stateToSet) => {
+                this.setState(stateToSet);
+            };
+            this.store = { getState, dispatch, subscribe };
+            window.store = this.store;
         }
 
         getState = () => {
             return this.state;
         }
 
+        subscribe = (f) => {
+            this.subscribers.push(f);
+        }
+
         componentDidUpdate() {
-            //we can call notification here
+            this.subscribers.reduce( (next, f) => {
+                f();
+            }, {});
         }
 
         dispatch = (fsa) => {
-            const { dispatch, setState, getState } = this;
-            dispatchAction({dispatch, setState, getState, reducer}, fsa);
+            const { dispatch, bindedSetState, getState } = this;
+            dispatchAction({dispatch, setState: bindedSetState, getState, reducer}, fsa);
         }
 
         render() {
@@ -38,6 +46,31 @@ export const withStore = (reducer, initialState) => Comp => {
     };
 };
 
+export const bindActionCreators = (creators) => (dispatch) => {
+    return Object.keys( creators ).reduce( (actions, key) => {
+        actions[key] = (...args) => {
+            dispatch(creators[key](...args));
+        };
+        return actions;
+    }, {});
+};
+
+export const combineReducers = (reducersMap) => {
+
+    return (state, action) => {
+        const keys = Object.keys(reducersMap);
+
+        const resultingState = keys.reduce( (acc, reducerKey) => {
+            const stateToPass = acc[reducerKey];
+            const actualReducer = reducersMap[reducerKey];
+
+            return { ...acc, [reducerKey]: actualReducer(stateToPass, action) };
+
+        }, state);
+
+        return resultingState;
+    };
+};
 
 const dispatchAction = ({dispatch, setState, getState, reducer}, fsa) => {
     if ( typeof fsa === 'function' ) {
@@ -46,15 +79,15 @@ const dispatchAction = ({dispatch, setState, getState, reducer}, fsa) => {
         const { payload, type } = fsa;
         let thennable = null;
 
-        if ( payload && payload.then ) {
+        if ( fsa && fsa.then ) {
+            thennable = fsa.then;
+        } else if ( payload && payload.then ) {
             //payload is a promise
             thennable = payload;
-        } else if ( fsa.then ) {
-            thennable = fsa;
         }
-
+        console.log('thennable ', thennable);
         if ( thennable ) {
-            thennable.then( resolvedPayload => this.setState( (prevState) => reducer(prevState, { type, payload: resolvedPayload} )));
+            thennable.then( resolvedPayload => setState( (prevState) => reducer(prevState, { type, payload: resolvedPayload} )));
         } else {
             setState( (prevState) => reducer(prevState, fsa) );
         }

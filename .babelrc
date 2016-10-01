@@ -3,7 +3,7 @@
     "env": {
         "test": {
             "plugins": [
-                ["babel-plugin-webpack-alias", { "config": "webpack.dev.config.js" } ]
+                ["babel-plugin-webpack-alias", { "config": "webpack.test.config.js" } ]
             ]
         }
     }

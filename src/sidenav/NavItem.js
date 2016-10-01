@@ -41,7 +41,6 @@ export class NavItem extends React.Component {
         const { selectedId, id, highlightScheme, scheme, style = {}, isGroupSection } = props;
 
         const selected = selectedId === id && selectedId !== undefined;
-        console.log('is group section here ', isGroupSection);
         const className = cx('rui-snav-nav', SCHEMES_STYLE[SCHEMES[highlightScheme]],
             {
                 'rui-snav-item-text-dark': scheme === 'default' && !isGroupSection,
