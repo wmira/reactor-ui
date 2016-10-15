@@ -11,3 +11,5 @@ export const HItems = ({children}) => (
 HItems.propTypes = {
     children: PropTypes.node
 };
+
+export default HItems;

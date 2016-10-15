@@ -1,17 +1,41 @@
 
 import React, { PropTypes, Component } from 'react';
-//import { findDOMNode } from 'react-dom';
 
 import 'react-virtualized/styles.css';
-import { AutoSizer, FlexTable, FlexColumn } from 'react-virtualized';
+import { AutoSizer, Table, Column } from 'react-virtualized';
+
 import { get, compose, map } from 'fkit-js';
+
 import Cols from './Cols';
 import { findChild } from '../util';
+import Input from '../forms/Input';
 
 const getChildren = get('children');
 
 const createColConfigs = compose(  map(get('props')), get('props.children'), findChild(Cols), getChildren );
 
+const columnConfigIndexer = ( (map, colconfig ) => {
+    map[colconfig.id] = colconfig;
+    return map;
+});
+
+const InputEditorStyle = {
+    padding: '0px 2px ',
+    paddingRight: 2,
+    height: '100%',
+    border: 'none',
+    borderRadius: '0px',
+    outline: 'none',
+    width: '100%'
+};
+
+const hasSelection = selection => {
+    if ( selection && typeof selection.row === 'number' ) {
+        return true;
+    }
+
+    return false;
+};
 
 export default class Datagrid extends Component {
 
@@ -22,27 +46,127 @@ export default class Datagrid extends Component {
         headerHeight: PropTypes.number,
         data: PropTypes.array,
         enableSelection: PropTypes.bool,
-        children: PropTypes.node
+        children: PropTypes.node,
+        onCellDataEdited: PropTypes.func
     }
 
     constructor(props) {
         super(props);
 
-        this.state = { selection: [], columnConfigs: createColConfigs(props)};
+        const columnConfigs = createColConfigs(props);
+
+        const columnConfigsMap = columnConfigs.reduce(columnConfigIndexer, {});
+
+        const columns = columnConfigs.map( (config) => {
+            const { id, width, flexGrow } = config;
+            return <Column
+                    flexGrow={flexGrow}
+                    headerRenderer={this.renderHeader}
+                    cellDataGetter={this.cellDataGetter}
+                    cellRenderer={this.cellRenderer} key='id' dataKey={id} width={width} />;
+        });
+
+        this.state = { selection: {}, columnConfigs, columnConfigsMap, columns };
     }
 
-    onClick = (e) => {
+    cellRenderer = ({ cellData, columnData, dataKey, rowData, rowIndex }) => {
+
+        const { editing, columnConfigsMap } = this.state;
+        const colConfig = columnConfigsMap[dataKey];
+        const { formatter } = colConfig;
+
+        let dataToRender = formatter ? formatter({ cellData, rowData, dataKey }) : cellData;
+
+        if ( colConfig.renderer ) {
+            dataToRender = colConfig.renderer({ rowData, cellData, dataKey, formatter });
+        }
+        const { selection } = this.state;
+        const isSelected = selection.col === dataKey && selection.row === rowIndex;
+        const className  = isSelected ? 'rui-dgrid-cell-selected' : '';
+
+        if ( editing && isSelected ) {
+            dataToRender = <Input onKeyUp={this.onEditKeyPress} onKeyPress={this.onEditKeyPress} type='number' name='rui_edit' onChange={this.onEditChange}
+                            onBlur={this.onEditBlur} focusOnRender={true}
+                            style={InputEditorStyle} value={this.state.editingData}/>;
+        }
+
+        return <div data-row={rowIndex} className={`rui-dgrid-cell-data ${className}`} data-key={dataKey} onClick={this.onCellClicked} >{ dataToRender }</div>;
+    }
+
+    onEditBlur = () => {
+        this.setState({ editing: false, editingData: null, editedInfo: null });
+    }
+
+    onEditKeyPress = (e) => {
+        const { key } = e;
+
+        if ( key === 'Enter' ) {
+            this.dispatchOnEditCompletion();
+            this.onEditBlur();
+        } else if ( key === 'Escape' ) {
+            this.onEditBlur();
+        }
+    }
+
+    onEditChange = ({ value }) => {
+
+        this.setState({ editingData: value });
+
+    }
+
+    dispatchOnEditCompletion = () => {
+        const { editedInfo, editingData } = this.state;
+        const { columnConfigsMap } = this.state;
+        const columnConfig = columnConfigsMap[editedInfo.col];
+
+        if ( this.props.onCellDataEdited ) {
+            this.props.onCellDataEdited({ value: editingData, key: editedInfo.col, columnConfig, index: editedInfo.row });
+        }
+    }
+
+    onCellClicked = (e) => {
         let element = e.target;
+
         let row = element.getAttribute('data-row');
-        let col = element.getAttribute('data-col');
+        let col = element.getAttribute('data-key');
 
         if ( !row && !col ) {
             element = e.target.parentElement;
             row = element.getAttribute('data-row');
-            col = element.getAttribute('data-col');
+            col = element.getAttribute('data-key');
         }
-        this.setState({ selectedColConfig: this.state.columnConfigs[col], selectedElement: element });
+
+        if ( typeof row !== 'undefined' && col ) {
+            let clearEditData = null;
+            if ( this.state.editing ) {
+                clearEditData = { editing: false, editingData: null, editedInfo: null };
+                this.dispatchOnEditCompletion();
+            }
+            this.setState({ selection: { col, row: parseInt(row) }, ...clearEditData });
+        } else {
+            this.setState({ selection: {} });
+        }
     }
+
+    cellDataGetter = ({ dataKey, rowData }) => {
+        const { columnConfigsMap } = this.state;
+        const columnConfig = columnConfigsMap[dataKey];
+        const { path } = columnConfig;
+        if ( path ) {
+            return get(path)(rowData);
+        }
+
+        return rowData[dataKey];
+
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        const { selection } = this.state;
+        const { selection: prevSelection } = prevState;
+        this.Table.forceUpdate();
+    }
+
+
 
     getRow = ({ index }) => {
         const { data } = this.props;
@@ -50,38 +174,65 @@ export default class Datagrid extends Component {
     }
 
     renderHeader = ({ columnData, dataKey, disableSort, label, sortBy, sortDirection }) => {
-        return <div>{dataKey}</div>;
-    }
-    render() {
-        const { data, height: viewHeight } = this.props;
         const { columnConfigs } = this.state;
-        const columns = columnConfigs.map( (config) => {
-            const { id, width } = config;
-            return <FlexColumn
-                    headerRenderer={this.renderHeader}
-                    cellDataGetter={({ columnData, dataKey, rowData }) => rowData[dataKey] }
-                    cellRenderer={({ cellData, columnData, dataKey, rowData, rowIndex }) => cellData} key='id' dataKey={id} width={width} />;
-        });
+        const colConfigMapById = columnConfigs.reduce( (map, config) => {
+            map[config.id] = config;
+            return map;
+        }, {});
+        const colConfig = colConfigMapById[dataKey];
+
+        return <div>{colConfig.header || dataKey}</div>;
+    }
+
+    noRowsRenderer = () => {
+        return 'Nothing To Display';
+    }
+
+    onKeyPress = (e) => {
+        const { columnConfigsMap, selection } = this.state;
+        const { col } = selection;
+        if ( hasSelection(this.state.selection) && columnConfigsMap[col].editable ) {
+            e.stopPropagation();
+            const { key } = e;
+            const { editing } = this.state;
+            if ( !editing ) {
+                //start editor
+                this.setState({ editing: true , editingData: key, editedInfo: { ...this.state.selection } });
+            }
+        }
+    }
+
+    render() {
+        const { data, height: viewHeight = '100%' } = this.props;
+        const { columns, selection } = this.state;
+
 
         return (
-            <div style={{display: 'flex', height: viewHeight || 200}}>
-                <div style={{ flex: '1 1 auto' }} ref={ (el) => this.rootEl = el } onClick={this.onClick}>
+            <div style={{display: 'flex', height: viewHeight }} onKeyPress={this.onKeyPress}>
+                <div style={{ flex: '1 1 auto', position: 'relative' }} ref={ (el) => this.rootEl = el } onClick={this.onClick}>
                     <AutoSizer>
-                        { ({ width, height }) => (
-                            <FlexTable
-                                ref='Table'
+                        { ({ width, height }) => {
+
+                            return (<Table
+                                _data={data}
+                                _selection={selection}
+                                //onRowClick={this.onRowClicked}
+                                noRowsRenderer={this.noRowsRenderer}
+                                ref={ (Table) => {
+                                    this.Table = Table;
+                                }}
                                 disableHeader={false}
                                 disableHeader={false}
-                                headerHeight={22}
+                                headerHeight={24}
                                 height={height}
                                 rowClassName={'rui-dgrid-row'}
-                                rowHeight={22}
+                                rowHeight={24}
                                 rowGetter={this.getRow}
                                 rowCount={data.length}
                                 width={width}>
                                 { columns }
-                            </FlexTable>
-                        )}
+                            </Table>);
+                        }}
                     </AutoSizer>
                 </div>
             </div>

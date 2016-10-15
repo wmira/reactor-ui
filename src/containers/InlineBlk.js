@@ -9,3 +9,5 @@ InlineBlk.propTypes = {
     style: PropTypes.string,
     children: PropTypes.node
 };
+
+export default InlineBlk;

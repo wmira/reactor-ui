@@ -12,14 +12,33 @@ export class Input extends Component {
         name: PropTypes.string.isRequired,
         path: PropTypes.string,
         onChange: PropTypes.func,
-        style: PropTypes.object
+        style: PropTypes.object,
+        type: PropTypes.string,
+        readOnly: PropTypes.bool,
+        focusOnRender: PropTypes.bool,
+        onBlur: PropTypes.func,
+        onKeyPress: PropTypes.func,
+        type: PropTypes.string,
+        onKeyUp: PropTypes.func
     }
 
     static defaultProps = {
-        model: {}
+        model: {},
+        type: 'text',
+        readOnly: false,
+        focusOnRender: false,
+    }
+
+    componentDidMount() {
+        if ( this.props.focusOnRender ) {
+            setTimeout( () => {
+                this.refs.input.focus();
+            }, 0);
+        }
     }
 
     onChange = (e) => {
+
         const contextListener = this.context['_ruiform_changeListener_'];
         const { onChange, name } = this.props;
         const { target } = e;
@@ -36,13 +55,16 @@ export class Input extends Component {
 
     render() {
         const { props } = this;
-        const { name, model, value, style } = props;
+        const { name, onBlur, model, onKeyUp, onKeyPress, value, style, type, readOnly } = props;
         const contextModel = this.context['_ruiform_model_'];
         const modelToUse = contextModel ? contextModel : model;
 
         const valueToUse = value || modelToUse[name];
+
         return (
-            <input className='form-field' style={style} onChange={this.onChange} name={name} value={valueToUse || ''}/>
+            <input onKeyUp={onKeyUp} onKeyPress={onKeyPress} onBlur={onBlur} ref={'input'}
+                readOnly={readOnly} type={type} className='form-field'
+                    style={style} onChange={this.onChange} name={name} value={valueToUse || ''}/>
         );
     }
 }

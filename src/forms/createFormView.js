@@ -27,7 +27,9 @@ export default (FormComponent) => {
         }
 
         onFormFieldChange = ({ name, value }) => {
-            this.props.onChange({name, value});
+            if ( this.props.onChange ) {
+                this.props.onChange({name, value});
+            }
         }
 
         render() {

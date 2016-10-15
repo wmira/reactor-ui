@@ -14,7 +14,6 @@
     vertical-align: middle;
     border-bottom: 1px solid @white2;
 }
-
 .rui-dgrid-cell-cont {
     text-overflow: ellipsis; 
     overflow: hidden; 
@@ -23,6 +22,27 @@
 }
 
 .rui-dgrid-cell-data {
-    border-left: 1px solid @white2;
+
+    /* border-left: 1px solid @white2; */
     height: 100%;
+    line-height: 24px;
+    height: 24px;
+    width: 100%;    
+    padding-right: 1px;
+}
+.rui-dgrid-cell-selected {
+    background: #F5F5F5;
+}
+
+.ReactVirtualized__Table__Grid:focus {
+    outline: none;
+}
+
+.ReactVirtualized__Table__rowColumn:first-of-type {
+    margin-left: 0px !important;
+}
+
+.ReactVirtualized__Table__headerColumn, .ReactVirtualized__Table__rowColumn {
+    margin-right: 0px !important;
+    min-width: 0px;
 }

@@ -85,7 +85,7 @@ const dispatchAction = ({dispatch, setState, getState, reducer}, fsa) => {
             //payload is a promise
             thennable = payload;
         }
-        console.log('thennable ', thennable);
+
         if ( thennable ) {
             thennable.then( resolvedPayload => setState( (prevState) => reducer(prevState, { type, payload: resolvedPayload} )));
         } else {
