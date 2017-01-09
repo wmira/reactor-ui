@@ -31,7 +31,7 @@ export class NavGroup extends React.Component {
             cloned.style.left = '-9999px';
             cloned.style.height = 'auto';
             document.body.appendChild(cloned);
-            console.log(cloned, 'cloned height...', cloned.clientHeight);
+            /* console.log(cloned, 'cloned height...', cloned.clientHeight); */
             this.setState({computedHeight: cloned.clientHeight });
             document.body.removeChild(cloned);
         }

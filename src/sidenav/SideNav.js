@@ -43,7 +43,7 @@ export class SideNav extends React.Component {
             'rui-snav-clight': scheme === 'default',
             'rui-snav-cdark': scheme !== 'default'
         });
-        console.log('selectedId ', highlightScheme, selectedId);
+        /* console.log('selectedId ', highlightScheme, selectedId); */
         return (
             <FlexColumn className={containerClass} style={{width: '100%', height: '100%', ...style}}>
                 <ul className={'rui-snav'} >
