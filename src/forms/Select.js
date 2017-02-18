@@ -65,7 +65,9 @@ export class Select extends Component {
     render() {
         const { props } = this;
         const { name, model = {}, value, children, options: selections = [], readOnly } = props;
-        const options = selections.map(mapOption);
+        const emptyOptions = props.allowEmpty ? [<option key={''} value={''} />] : [];
+        const options = emptyOptions.concat([...selections.map(mapOption) ]);
+
         const contextModel = this.context['_ruiform_model_'];
         const modelToUse = contextModel ? contextModel : model;
         const valueToUse = value || modelToUse[name] || '';

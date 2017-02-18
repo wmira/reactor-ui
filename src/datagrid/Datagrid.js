@@ -65,7 +65,6 @@ export default class Datagrid extends Component {
                     cellDataGetter={this.cellDataGetter}
                     cellRenderer={this.cellRenderer} key='id' dataKey={id} width={width} />;
         });
-
         this.state = { selection: {}, columnConfigs, columnConfigsMap, columns };
     }
 
@@ -123,6 +122,7 @@ export default class Datagrid extends Component {
             this.props.onCellDataEdited({ value: editingData, key: editedInfo.col, columnConfig, index: editedInfo.row });
         }
     }
+
 
     onCellClicked = (e) => {
         let element = e.target;
@@ -191,7 +191,7 @@ export default class Datagrid extends Component {
     onKeyPress = (e) => {
         const { columnConfigsMap, selection } = this.state;
         const { col } = selection;
-        if ( hasSelection(this.state.selection) && columnConfigsMap[col].editable ) {
+        if ( hasSelection(this.state.selection) && columnConfigsMap[col].editable === true ) {
             e.stopPropagation();
             const { key } = e;
             const { editing } = this.state;
@@ -203,42 +203,34 @@ export default class Datagrid extends Component {
     }
 
     render() {
-        const { data, height: viewHeight = '100%' } = this.props;
+        const { data, height, width } = this.props;
         const { columns, selection } = this.state;
 
 
         return (
-            <div style={{display: 'flex', height: viewHeight }} onKeyPress={this.onKeyPress}>
-                <div style={{ flex: '1 1 auto', position: 'relative' }} ref={ (el) => this.rootEl = el } onClick={this.onClick}>
-                    <AutoSizer>
-                        { ({ width, height }) => {
-
-                            return (<Table
-                                _data={data}
-                                _selection={selection}
-                                //onRowClick={this.onRowClicked}
-                                noRowsRenderer={this.noRowsRenderer}
-                                ref={ (Table) => {
-                                    this.Table = Table;
-                                }}
-                                disableHeader={false}
-                                disableHeader={false}
-                                headerHeight={24}
-                                height={height}
-                                rowClassName={'rui-dgrid-row'}
-                                rowHeight={24}
-                                rowGetter={this.getRow}
-                                rowCount={data.length}
-                                width={width}>
-                                { columns }
-                            </Table>);
-                        }}
-                    </AutoSizer>
-                </div>
+            <div style={{height, width }} onKeyPress={this.onKeyPress}>
+                <Table
+                    _data={data}
+                    _selection={selection}
+                    //onRowClick={this.onRowClicked}
+                    noRowsRenderer={this.noRowsRenderer}
+                    ref={ (Table) => {
+                        this.Table = Table;
+                    }}
+                    disableHeader={false}
+                    disableHeader={false}
+                    headerHeight={24}
+                    height={height}
+                    rowClassName={'rui-dgrid-row'}
+                    rowHeight={24}
+                    rowGetter={this.getRow}
+                    rowCount={data.length}
+                    width={width}>
+                    { columns }
+                </Table>
             </div>
         );
     }
 }
 
 export { Datagrid };
-//{ enableSelection ? <Selection anchor={this.rootEl} colConfig={this.state.selectedColConfig} element={this.state.selectedElement} /> : null }
